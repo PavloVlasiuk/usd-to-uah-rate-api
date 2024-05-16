@@ -1,0 +1,12 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { Email, Prisma } from '@prisma/client';
+
+@Injectable()
+export class EmailRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: Prisma.EmailCreateInput): Promise<Email> {
+    return this.prisma.email.create({ data });
+  }
+}
