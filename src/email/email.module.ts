@@ -32,5 +32,6 @@ import { DatabaseModule } from 'src/database/database.module';
   ],
   controllers: [EmailController],
   providers: [EmailService],
+  exports: [EmailService],
 })
 export class EmailModule {}

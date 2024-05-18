@@ -13,4 +13,8 @@ export class EmailRepository {
   async find(where: Prisma.EmailWhereInput): Promise<Email> {
     return this.prisma.email.findFirst({ where });
   }
+
+  async findMany(args?: Prisma.EmailFindManyArgs): Promise<Array<Email>> {
+    return this.prisma.email.findMany({ ...args });
+  }
 }
