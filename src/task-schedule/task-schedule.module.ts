@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TaskScheduleService } from './schedule.service';
+import { TaskScheduleService } from './task-schedule.service';
 import { RateModule } from 'src/rate/rate.module';
 import { EmailModule } from 'src/email/email.module';
 
