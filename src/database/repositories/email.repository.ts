@@ -9,4 +9,8 @@ export class EmailRepository {
   async create(data: Prisma.EmailCreateInput): Promise<Email> {
     return this.prisma.email.create({ data });
   }
+
+  async find(where: Prisma.EmailWhereInput): Promise<Email> {
+    return this.prisma.email.findFirst({ where });
+  }
 }
