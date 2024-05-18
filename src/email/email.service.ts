@@ -1,10 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ISendEmailOptions } from './interfaces/send-email-options.interface';
 import { MailerService } from '@nestjs-modules/mailer';
 import { EmailRepository } from 'src/database/repositories/email.repository';
 import { SubscribeEmailDto } from './dtos/subscribe-email.dto';
 import * as path from 'path';
 import { Email } from '@prisma/client';
+import { AlreadySubscribedException } from 'src/common/exceptions';
 
 @Injectable()
 export class EmailService {
@@ -35,8 +36,7 @@ export class EmailService {
   async subscribe({ email }: SubscribeEmailDto): Promise<void> {
     const alreadySubscribed = await this.emailRepository.find({ email });
 
-    if (alreadySubscribed)
-      throw new ConflictException('Email is already subscribed');
+    if (alreadySubscribed) throw new AlreadySubscribedException();
 
     await this.emailRepository.create({ email });
   }
