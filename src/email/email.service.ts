@@ -1,9 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { ISendEmailOptions } from './interfaces/send-email-options.interface';
 import { MailerService } from '@nestjs-modules/mailer';
-import * as path from 'path';
 import { EmailRepository } from 'src/database/repositories/email.repository';
 import { SubscribeEmailDto } from './dtos/subscribe-email.dto';
+import * as path from 'path';
+import { Email } from '@prisma/client';
 
 @Injectable()
 export class EmailService {
@@ -15,16 +16,16 @@ export class EmailService {
   async sendTemplatedEmail({
     to,
     subject,
-    message,
+    context,
   }: ISendEmailOptions): Promise<void> {
     this.mailerService
       .sendMail({
         to,
         subject,
-        template: path.resolve('./src/email/templates/template.hbs'),
-        context: {
-          message,
-        },
+        template: path.resolve(
+          './src/email/templates/exchange-rate.template.hbs',
+        ),
+        context,
       })
       .catch((e) => {
         console.error(`Sending email error: ${e}`);
@@ -38,5 +39,9 @@ export class EmailService {
       throw new ConflictException('Email is already subscribed');
 
     await this.emailRepository.create({ email });
+  }
+
+  async getAllSubscribers(): Promise<Array<Email>> {
+    return this.emailRepository.findMany();
   }
 }
