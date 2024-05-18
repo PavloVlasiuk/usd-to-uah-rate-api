@@ -4,6 +4,7 @@ import { RateModule } from './rate/rate.module';
 import { EmailModule } from './email/email.module';
 import { TaskScheduleModule } from './task-schedule/schedule.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AppConfigModule } from './config/app-config.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     EmailModule,
     TaskScheduleModule,
     ScheduleModule.forRoot(),
+    AppConfigModule,
   ],
 })
 export class AppModule {}

@@ -1,11 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { AppConfigService } from './config/app-config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api');
+  const appConfigService = app.get<AppConfigService>(AppConfigService);
 
-  await app.listen(3000);
+  const PORT = appConfigService.get<string>('app.port');
+
+  const HOST = appConfigService.get<string>('app.host');
+
+  const GLOBAL_PREFIX = appConfigService.get<string>('app.globalPrefix');
+
+  app.setGlobalPrefix(GLOBAL_PREFIX);
+
+  await app.listen(PORT, HOST, async () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`);
+  });
 }
 bootstrap();
