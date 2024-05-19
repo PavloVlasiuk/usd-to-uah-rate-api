@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ISendEmailOptions } from './interfaces/send-email-options.interface';
 import { MailerService } from '@nestjs-modules/mailer';
-import { EmailRepository } from 'src/database/repositories/email.repository';
+import { EmailRepository } from '../database/repositories/email.repository';
 import { SubscribeEmailDto } from './dtos/subscribe-email.dto';
 import * as path from 'path';
 import { Email } from '@prisma/client';
-import { AlreadySubscribedException } from 'src/common/exceptions';
+import { AlreadySubscribedException } from '../common/exceptions';
 
 @Injectable()
 export class EmailService {
@@ -19,7 +19,7 @@ export class EmailService {
     subject,
     context,
   }: ISendEmailOptions): Promise<void> {
-    this.mailerService
+    await this.mailerService
       .sendMail({
         to,
         subject,
