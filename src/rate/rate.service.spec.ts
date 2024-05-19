@@ -26,6 +26,10 @@ describe('RateService', () => {
     httpService = testingModule.get<HttpService>(HttpService);
   });
 
+  it('should be defined', () => {
+    expect(rateService).toBeDefined();
+  });
+
   describe('getCurrentRate', () => {
     it('should return current rate usd to uah and exchange date', async () => {
       const data: Array<IExchangeRate> = [
