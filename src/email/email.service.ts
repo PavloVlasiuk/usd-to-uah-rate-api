@@ -19,7 +19,7 @@ export class EmailService {
     subject,
     context,
   }: ISendEmailOptions): Promise<void> {
-    this.mailerService
+    await this.mailerService
       .sendMail({
         to,
         subject,
